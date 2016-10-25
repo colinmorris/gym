@@ -28,6 +28,12 @@ class Discrete(gym.Space):
         return self.n == other.n
 
 class Categorical(Discrete):
+    """A discrete space with named elements. Element indices are made available
+    as attributes (as long as they're legal Python names). e.g.
+    >>> shapes = Categorical(['circle', 'triangle', 'rectangle'])
+    >>> shapes.circle
+    0
+    """
     def __init__(self, named_members):
         self.n = len(named_members)
         self.named_members = list(named_members)
