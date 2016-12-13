@@ -88,12 +88,6 @@ class Env(object):
     # Do not override
     _owns_render = True
 
-    @property
-    def monitor(self):
-        raise NotImplemented("Use the MonitorWrapper wrapper if you need a " +
-            "monitor. (You get this for free if you instantiate using gym.make())")
-    
-
     def step(self, action):
         """Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
@@ -355,10 +349,16 @@ class Wrapper(Env):
             self.env.spec = spec
         self._spec = spec
 
-class MonitorWrapper(Wrapper):
+class Monitored(Wrapper):
+    def __init__(self, env=None, monitor=None):
+        if monitor is not None:
+            self._monitor = monitor
+        super(Monitored, self).__init__(env)
+
     @property
     def monitor(self):
         """
+        # TODO: I don't understand this
         We do this lazily rather than at environment creation time
         since when the monitor closes, we need remove the existing
         monitor but also make it easy to start a new one. We could

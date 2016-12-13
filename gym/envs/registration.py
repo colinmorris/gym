@@ -4,7 +4,6 @@ import re
 import sys
 
 from gym import error
-from gym.core import MonitorWrapper
 
 logger = logging.getLogger(__name__)
 # This format is true today, but it's *not* an official spec.
@@ -70,9 +69,6 @@ class EnvSpec(object):
 
         cls = load(self._entry_point)
         env = cls(**self._kwargs)
-        # (Some envs aren't compatible with MonitorWrapper.)
-        if getattr(env, 'monitor_wrapper_friendly', True):
-            env = MonitorWrapper(env)
 
         # Make the enviroment aware of which spec it came from.
         env.spec = self
