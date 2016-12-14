@@ -358,7 +358,6 @@ class Monitored(Wrapper):
     @property
     def monitor(self):
         """
-        # TODO: I don't understand this
         We do this lazily rather than at environment creation time
         since when the monitor closes, we need remove the existing
         monitor but also make it easy to start a new one. We could
